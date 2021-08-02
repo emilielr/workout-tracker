@@ -12,19 +12,21 @@ import {
 } from "@material-ui/core";
 import "./WorkoutForm.scss";
 import { useState } from "react";
+import { db } from "../firebase";
 
 type Data = {
   name: string;
-  set: number;
+  sets: number;
   reps: number;
   kg: number;
 };
 
 export const WorkoutForm = () => {
-  const [rows, setRows] = useState<Data[]>();
+  const [workoutName, setWorkoutName] = useState("");
+  const [rows, setRows] = useState<Data[]>([]);
   const [data, setData] = useState<Data>({
     name: "",
-    set: 0,
+    sets: 0,
     reps: 0,
     kg: 0,
   });
@@ -36,15 +38,28 @@ export const WorkoutForm = () => {
 
   const addRow = () => {
     setRows([...rows!, data]);
-    setData({ name: "", set: 0, reps: 0, kg: 0 });
+    setData({ name: "", sets: 0, reps: 0, kg: 0 });
   };
+
+  const saveWorkout = () => {
+    db.collection("workouts").add({
+      workoutName: workoutName,
+      exercises: rows,
+    });
+  };
+  console.log(workoutName);
+  console.log(data);
 
   return (
     <div className="table-container">
       <h1>Opprett ny trening</h1>
       <div className="form-title">
         <p>Navn på trening</p>
-        <TextField variant="outlined"></TextField>
+        <TextField
+          variant="outlined"
+          value={workoutName}
+          onChange={(event) => setWorkoutName(event.target.value)}
+        ></TextField>
       </div>
       <TableContainer>
         <Table>
@@ -67,7 +82,7 @@ export const WorkoutForm = () => {
               return (
                 <TableRow key={row.name} component="th" scope="row">
                   <TableCell>{row.name}</TableCell>
-                  <TableCell align="right">{row.set}</TableCell>
+                  <TableCell align="right">{row.sets}</TableCell>
                   <TableCell align="right">{row.reps}</TableCell>
                   <TableCell align="right">{row.kg}</TableCell>
                 </TableRow>
@@ -82,8 +97,8 @@ export const WorkoutForm = () => {
               </TableCell>
               <TableCell align="right">
                 <InputBase
-                  value={data.set === 0 ? "" : data.set}
-                  onChange={handleChange("set")}
+                  value={data.sets === 0 ? "" : data.sets}
+                  onChange={handleChange("sets")}
                 ></InputBase>
               </TableCell>
               <TableCell align="right">
@@ -104,6 +119,7 @@ export const WorkoutForm = () => {
       </TableContainer>
 
       <Button onClick={addRow}>Legg til øvelse</Button>
+      <Button onClick={saveWorkout}>Lagre treningsøkt</Button>
     </div>
   );
 };
