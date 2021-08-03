@@ -51,9 +51,6 @@ export const WorkoutForm = () => {
       exercises: rows,
     });
   };
-  console.log(workoutName);
-  console.log(data);
-  console.log(selectedDate);
 
   return (
     <div className="table-container">
