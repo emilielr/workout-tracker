@@ -13,6 +13,8 @@ import {
 import "./WorkoutForm.scss";
 import { useState } from "react";
 import { db } from "../firebase";
+import AddIcon from "@material-ui/icons/AddCircle";
+import SaveIcon from "@material-ui/icons/Save";
 
 type Data = {
   name: string;
@@ -23,6 +25,7 @@ type Data = {
 
 export const WorkoutForm = () => {
   const [workoutName, setWorkoutName] = useState("");
+  const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
   const [rows, setRows] = useState<Data[]>([]);
   const [data, setData] = useState<Data>({
     name: "",
@@ -44,43 +47,59 @@ export const WorkoutForm = () => {
   const saveWorkout = () => {
     db.collection("workouts").add({
       workoutName: workoutName,
+      date: selectedDate,
       exercises: rows,
     });
   };
   console.log(workoutName);
   console.log(data);
+  console.log(selectedDate);
 
   return (
     <div className="table-container">
       <h1>Opprett ny trening</h1>
-      <div className="form-title">
-        <p>Navn på trening</p>
-        <TextField
-          variant="outlined"
-          value={workoutName}
-          onChange={(event) => setWorkoutName(event.target.value)}
-        ></TextField>
+      <div className="table-header">
+        <div className="workout-name">
+          <span className="text">Navn på trening:</span>
+          <TextField
+            value={workoutName}
+            onChange={(event) => setWorkoutName(event.target.value)}
+            size="small"
+          ></TextField>
+        </div>
+        <div className="workout-date">
+          <span className="text">Dato for økt:</span>
+          <TextField
+            id="date"
+            size="small"
+            type="date"
+            InputLabelProps={{
+              shrink: true,
+            }}
+            onChange={(event) => setSelectedDate(new Date(event.target.value))}
+          />
+        </div>
       </div>
       <TableContainer>
-        <Table>
+        <Table size="small">
           <TableHead>
             <TableRow>
               <TableCell>Øvelse</TableCell>
-              <TableCell align="right">Sett</TableCell>
-              <TableCell align="right">Reps</TableCell>
-              <TableCell align="right">Kg</TableCell>
+              <TableCell align="right" className="sets">
+                Sett
+              </TableCell>
+              <TableCell align="right" className="reps">
+                Reps
+              </TableCell>
+              <TableCell align="right" className="kg">
+                Kg
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            <TableRow>
-              <TableCell>Knebøy</TableCell>
-              <TableCell align="right">3</TableCell>
-              <TableCell align="right">10</TableCell>
-              <TableCell align="right">50</TableCell>
-            </TableRow>
             {rows?.map((row: Data) => {
               return (
-                <TableRow key={row.name} component="th" scope="row">
+                <TableRow key={row.name}>
                   <TableCell>{row.name}</TableCell>
                   <TableCell align="right">{row.sets}</TableCell>
                   <TableCell align="right">{row.reps}</TableCell>
@@ -91,24 +110,30 @@ export const WorkoutForm = () => {
             <TableRow>
               <TableCell>
                 <InputBase
+                  className="name"
+                  placeholder="Skriv her.."
                   value={data.name}
                   onChange={handleChange("name")}
+                  required={true}
                 ></InputBase>
               </TableCell>
               <TableCell align="right">
                 <InputBase
+                  placeholder="Skriv her.."
                   value={data.sets === 0 ? "" : data.sets}
                   onChange={handleChange("sets")}
                 ></InputBase>
               </TableCell>
               <TableCell align="right">
                 <InputBase
+                  placeholder="Skriv her.."
                   value={data.reps === 0 ? "" : data.reps}
                   onChange={handleChange("reps")}
                 ></InputBase>
               </TableCell>
               <TableCell align="right">
                 <InputBase
+                  placeholder="Skriv her.."
                   value={data.kg === 0 ? "" : data.kg}
                   onChange={handleChange("kg")}
                 ></InputBase>
@@ -117,9 +142,19 @@ export const WorkoutForm = () => {
           </TableBody>
         </Table>
       </TableContainer>
-
-      <Button onClick={addRow}>Legg til øvelse</Button>
-      <Button onClick={saveWorkout}>Lagre treningsøkt</Button>
+      <div className="btns">
+        <Button startIcon={<AddIcon />} onClick={addRow} variant="outlined">
+          Legg til øvelse
+        </Button>
+        <br />
+        <Button
+          startIcon={<SaveIcon />}
+          onClick={saveWorkout}
+          variant="outlined"
+        >
+          Lagre treningsøkt
+        </Button>
+      </div>
     </div>
   );
 };
