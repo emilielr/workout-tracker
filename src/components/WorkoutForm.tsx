@@ -18,32 +18,25 @@ import AddIcon from "@material-ui/icons/AddCircle";
 import SaveIcon from "@material-ui/icons/Save";
 import { Link } from "react-router-dom";
 
-type Data = {
-  name: string;
-  sets: number;
-  reps: number;
-  kg: number;
-};
-
 export const WorkoutForm = () => {
   const [workoutName, setWorkoutName] = useState("");
   const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
-  const [rows, setRows] = useState<Data[]>([]);
-  const [data, setData] = useState<Data>({
+  const [rows, setRows] = useState<Exercise[]>([]);
+  const [exercise, setExercise] = useState<Exercise>({
     name: "",
-    sets: 0,
-    reps: 0,
-    kg: 0,
+    sets: "",
+    reps: "",
+    kg: "",
   });
 
   const handleChange =
-    (prop: keyof Data) => (event: ChangeEvent<HTMLInputElement>) => {
-      setData({ ...data, [prop]: event.target.value });
+    (prop: keyof Exercise) => (event: ChangeEvent<HTMLInputElement>) => {
+      setExercise({ ...exercise, [prop]: event.target.value });
     };
 
   const addRow = () => {
-    setRows([...rows!, data]);
-    setData({ name: "", sets: 0, reps: 0, kg: 0 });
+    setRows([...rows!, exercise]);
+    setExercise({ name: "", sets: "", reps: "", kg: "" });
   };
 
   const saveWorkout = () => {
@@ -99,7 +92,7 @@ export const WorkoutForm = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows?.map((row: Data) => {
+            {rows?.map((row: Exercise) => {
               return (
                 <TableRow key={row.name}>
                   <TableCell>{row.name}</TableCell>
@@ -114,7 +107,7 @@ export const WorkoutForm = () => {
                 <InputBase
                   className="name"
                   placeholder="Skriv her.."
-                  value={data.name}
+                  value={exercise.name}
                   onChange={handleChange("name")}
                   required={true}
                 ></InputBase>
@@ -122,21 +115,21 @@ export const WorkoutForm = () => {
               <TableCell align="right">
                 <InputBase
                   placeholder="Skriv her.."
-                  value={data.sets === 0 ? "" : data.sets}
+                  value={exercise.sets}
                   onChange={handleChange("sets")}
                 ></InputBase>
               </TableCell>
               <TableCell align="right">
                 <InputBase
                   placeholder="Skriv her.."
-                  value={data.reps === 0 ? "" : data.reps}
+                  value={exercise.reps}
                   onChange={handleChange("reps")}
                 ></InputBase>
               </TableCell>
               <TableCell align="right">
                 <InputBase
                   placeholder="Skriv her.."
-                  value={data.kg === 0 ? "" : data.kg}
+                  value={exercise.kg}
                   onChange={handleChange("kg")}
                 ></InputBase>
               </TableCell>
