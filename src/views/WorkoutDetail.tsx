@@ -7,6 +7,7 @@ import {
   TableHead,
   TableRow,
 } from "@material-ui/core";
+import "../components/Form.scss";
 import { Link, useLocation } from "react-router-dom";
 
 type LocationState = {

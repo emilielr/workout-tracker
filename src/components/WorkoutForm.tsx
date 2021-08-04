@@ -11,6 +11,7 @@ import {
   TextField,
 } from "@material-ui/core";
 import "./WorkoutForm.scss";
+import "./Form.scss";
 import { useState } from "react";
 import { db } from "../firebase";
 import AddIcon from "@material-ui/icons/AddCircle";

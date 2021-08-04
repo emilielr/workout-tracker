@@ -14,26 +14,6 @@
   padding-right: 1rem;
 }
 
-.MuiTableCell-head {
-  background-color: #ededed;
-  font-weight: 700 !important;
-  &.sets,
-  &.reps,
-  &.kg {
-    width: 6rem;
-  }
-}
-
-.MuiInputBase-input {
-  text-align: right;
-}
-
-.MuiInputBase-root.name {
-  .MuiInputBase-input {
-    text-align: left !important;
-  }
-}
-
 .btns {
   float: right;
   display: flex;
