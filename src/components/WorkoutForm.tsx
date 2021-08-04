@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from "react";
+import { ChangeEvent } from "react";
 import {
   Button,
   InputBase,
@@ -17,11 +17,16 @@ import { db } from "../firebase";
 import AddIcon from "@material-ui/icons/AddCircle";
 import SaveIcon from "@material-ui/icons/Save";
 import { Link } from "react-router-dom";
+import { alertEnum } from "../utils/enums";
+import { AlertComponent } from "./AlertComponent";
 
 export const WorkoutForm = () => {
   const [workoutName, setWorkoutName] = useState("");
   const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
   const [rows, setRows] = useState<Exercise[]>([]);
+  const [alert, setAlert] = useState<alertEnum>();
+  const [openAlert, setOpenAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
   const [exercise, setExercise] = useState<Exercise>({
     name: "",
     sets: "",
@@ -40,11 +45,21 @@ export const WorkoutForm = () => {
   };
 
   const saveWorkout = () => {
-    db.collection("workouts").add({
-      workoutName: workoutName,
-      date: selectedDate,
-      exercises: rows,
-    });
+    setOpenAlert(true);
+    db.collection("workouts")
+      .add({
+        workoutName: workoutName,
+        date: selectedDate,
+        exercises: rows,
+      })
+      .then(() => {
+        setAlertMessage("Du har lagt til en ny treningsøkt!");
+        setAlert(alertEnum.success);
+      })
+      .catch(() => {
+        setAlertMessage("Noe gikk galt under lagringen.");
+        setAlert(alertEnum.error);
+      });
   };
 
   return (
@@ -52,6 +67,13 @@ export const WorkoutForm = () => {
       <Button component={Link} to="/" variant="outlined">
         Tilbake
       </Button>
+      {openAlert && (
+        <AlertComponent
+          severity={alert!}
+          message={alertMessage}
+          setOpenAlert={setOpenAlert}
+        />
+      )}
       <h1>Opprett ny trening</h1>
       <div className="table-header">
         <div className="workout-name">
