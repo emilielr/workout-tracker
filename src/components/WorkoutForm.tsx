@@ -11,10 +11,12 @@ import {
   TextField,
 } from "@material-ui/core";
 import "./WorkoutForm.scss";
+import "./Form.scss";
 import { useState } from "react";
 import { db } from "../firebase";
 import AddIcon from "@material-ui/icons/AddCircle";
 import SaveIcon from "@material-ui/icons/Save";
+import { Link } from "react-router-dom";
 
 type Data = {
   name: string;
@@ -54,6 +56,9 @@ export const WorkoutForm = () => {
 
   return (
     <div className="table-container">
+      <Button component={Link} to="/" variant="outlined">
+        Tilbake
+      </Button>
       <h1>Opprett ny trening</h1>
       <div className="table-header">
         <div className="workout-name">
