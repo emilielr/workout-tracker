@@ -17,7 +17,7 @@ export const WorkoutList = () => {
             temp.push({
               id: doc.id,
               workoutName: doc.data().workoutName,
-              date: doc.data().date,
+              date: doc.data().date.toDate(),
               exercises: doc.data().exercises,
             });
           });
