@@ -21,6 +21,11 @@ export const WorkoutList = () => {
               exercises: doc.data().exercises,
             });
           });
+          temp
+            .sort((a, b) => {
+              return new Date(a.date).getTime() - new Date(b.date).getTime();
+            })
+            .reverse();
           setWorkouts(temp);
         });
     }

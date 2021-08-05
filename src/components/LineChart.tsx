@@ -20,7 +20,7 @@ export const LineChartComponent = ({ data }: Props) => {
       return (
         <div className="tooltip">
           <p className="exercise">{`${payload[0].payload.name}`}</p>
-          <p className="date">Dato: {label}</p>
+          <p className="date">{label}</p>
           <p className="value">
             Vekt: {payload[0].payload.kg + payload[0].name}
           </p>
