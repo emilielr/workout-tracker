@@ -9,7 +9,7 @@ import {
 } from "@material-ui/core";
 import "../components/Form.scss";
 import { Link, useLocation } from "react-router-dom";
-import { formatDate } from "../utils/date.";
+import { formatDate } from "../utils/date";
 
 type LocationState = {
   workout: Workout;

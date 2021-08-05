@@ -18,6 +18,10 @@ export const MainView = () => {
         slik at man enkelt kan tilpasse og optimalisere trening slik at man får
         maks utbytte. LOL.
       </p>
+      <Button component={Link} to="/chart" variant="outlined">
+        Se line chart
+      </Button>
+      <br /> <br />
       <Button component={Link} to="/newWorkout" variant="outlined">
         Opprett ny treningsøkt
       </Button>

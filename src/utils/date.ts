@@ -28,6 +28,10 @@ export const months: DateEnum[] = [
   { value: 11, label: "Desember" },
 ];
 
+export const simpleFormatDate = (date: Date) => {
+  return date.getDate() + "." + date.getMonth() + "." + date.getFullYear();
+};
+
 export const formatDate = (date: Date) => {
   const day = days.find((day) => day.value === date.getDay())?.label;
   const month = months.find((month) => month.value === date.getMonth())?.label;
