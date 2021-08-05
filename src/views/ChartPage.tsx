@@ -25,6 +25,7 @@ export const ChartPage = () => {
                 tempData.push({
                   date: simpleFormatDate(doc.data().date.toDate()),
                   kg: exercise.kg,
+                  name: exercise.name,
                 });
               }
             });

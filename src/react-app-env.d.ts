@@ -17,4 +17,5 @@ type Exercise = {
 type LineChartData = {
   date: string;
   kg: string;
+  name: string;
 };
