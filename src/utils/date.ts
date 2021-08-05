@@ -29,7 +29,10 @@ export const months: DateEnum[] = [
 ];
 
 export const simpleFormatDate = (date: Date) => {
-  return date.getDate() + "." + date.getMonth() + "." + date.getFullYear();
+  const month = months
+    .find((month) => month.value === date.getMonth())
+    ?.label.toLowerCase();
+  return date.getDate() + ". " + month + " " + date.getFullYear();
 };
 
 export const formatDate = (date: Date) => {
