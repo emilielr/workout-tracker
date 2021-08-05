@@ -6,6 +6,7 @@ import {
   Tooltip,
   CartesianGrid,
   Legend,
+  ResponsiveContainer,
 } from "recharts";
 import "./LineChart.scss";
 
@@ -14,7 +15,6 @@ type Props = {
 };
 
 export const LineChartComponent = ({ data }: Props) => {
-  console.log(data);
   const CustomTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {
       return (
@@ -27,19 +27,21 @@ export const LineChartComponent = ({ data }: Props) => {
         </div>
       );
     }
-
     return null;
   };
+
   return (
     <div className="line-chart-container">
-      <LineChart width={730} height={250} data={data}>
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="date" />
-        <YAxis />
-        <Tooltip content={<CustomTooltip />} />
-        <Legend />
-        <Line dataKey="kg" stroke="#82ca9d" strokeWidth={2} />
-      </LineChart>
+      <ResponsiveContainer width="100%" height={300}>
+        <LineChart data={data}>
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="date" />
+          <YAxis />
+          <Tooltip content={<CustomTooltip />} />
+          <Legend />
+          <Line dataKey="kg" stroke="#82ca9d" strokeWidth={2} />
+        </LineChart>
+      </ResponsiveContainer>
     </div>
   );
 };
