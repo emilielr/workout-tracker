@@ -4,6 +4,7 @@ import { WorkoutForm } from "./components/WorkoutForm";
 import { MainView } from "./views/MainView";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { WorkoutDetail } from "./views/WorkoutDetail";
+import { ChartPage } from "./views/ChartPage";
 
 function App() {
   return (
@@ -17,6 +18,9 @@ function App() {
         </Route>
         <Route exact path="/workout/:id">
           <WorkoutDetail />
+        </Route>
+        <Route path="/chart">
+          <ChartPage />
         </Route>
       </div>
     </Router>

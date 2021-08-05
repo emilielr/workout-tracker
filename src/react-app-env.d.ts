@@ -13,3 +13,9 @@ type Exercise = {
   reps: string;
   kg: string;
 };
+
+type LineChartData = {
+  date: string;
+  kg: string;
+  name: string;
+};
