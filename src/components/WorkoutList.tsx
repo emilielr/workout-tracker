@@ -34,7 +34,7 @@ export const WorkoutList = () => {
   const getNextPaginatedWorkouts = () => {
     db.collection("workouts")
       .orderBy("date", "desc")
-      .startAt(nextPage)
+      .startAfter(nextPage)
       .limit(rowsPerPage)
       .get()
       .then((querySnapshot) => {
@@ -105,13 +105,9 @@ export const WorkoutList = () => {
     event: React.MouseEvent<HTMLButtonElement> | null,
     newPage: number
   ) => {
-    console.log("forrige side: ", page, "ny side:", newPage);
-
     if (newPage > page) {
-      console.log("vi skal hente neste side");
       getNextPaginatedWorkouts();
     } else {
-      console.log("vi skal hente forrige side");
       getPrevPaginatedWorkouts();
     }
     setPage(newPage);
