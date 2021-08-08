@@ -33,7 +33,7 @@ export const WorkoutList = () => {
 
   const getNextPaginatedWorkouts = () => {
     db.collection("workouts")
-      .orderBy("date")
+      .orderBy("date", "desc")
       .startAt(nextPage)
       .limit(rowsPerPage)
       .get()
@@ -57,7 +57,7 @@ export const WorkoutList = () => {
 
   const getPrevPaginatedWorkouts = () => {
     db.collection("workouts")
-      .orderBy("date")
+      .orderBy("date", "desc")
       .startAt(prevPage)
       .limit(rowsPerPage)
       .get()
@@ -82,7 +82,7 @@ export const WorkoutList = () => {
   useEffect(() => {
     getWorkoutCount();
     db.collection("workouts")
-      .orderBy("date")
+      .orderBy("date", "desc")
       .limit(rowsPerPage)
       .get()
       .then((querySnapshot) => {
