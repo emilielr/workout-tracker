@@ -16,6 +16,7 @@ export const ChartPage = () => {
   const getExercise = (e: string) => {
     if (data === prevData) {
       db.collection("workouts")
+        .orderBy("date")
         .get()
         .then((querySnapshot) => {
           let tempData: LineChartData[] = [];
@@ -29,9 +30,6 @@ export const ChartPage = () => {
                 });
               }
             });
-          });
-          tempData.sort((a, b) => {
-            return new Date(a.date).getTime() - new Date(b.date).getTime();
           });
           setData(tempData);
         });
