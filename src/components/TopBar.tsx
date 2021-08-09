@@ -23,6 +23,7 @@ import ListIcon from "@material-ui/icons/ListAltOutlined";
 import LightIcon from "@material-ui/icons/EmojiObjectsOutlined";
 import BarChartIcon from "@material-ui/icons/BarChartOutlined";
 import CalendarIcon from "@material-ui/icons/CalendarTodayOutlined";
+import HomeIcon from "@material-ui/icons/HomeOutlined";
 
 type ListProps = {
   text: string;
@@ -46,8 +47,8 @@ const useStyles = makeStyles((theme: Theme) =>
     appBar: {
       backgroundColor: "#EF820D",
       [theme.breakpoints.up("sm")]: {
-        width: `calc(100% - ${drawerWidth}px)`,
-        marginLeft: drawerWidth,
+        zIndex: "1",
+        fontSize: "20px",
       },
     },
     menuButton: {
@@ -60,6 +61,9 @@ const useStyles = makeStyles((theme: Theme) =>
     toolbar: theme.mixins.toolbar,
     drawerPaper: {
       width: drawerWidth,
+      [theme.breakpoints.up("sm")]: {
+        top: "70px",
+      },
     },
     content: {
       flexGrow: 1,
@@ -75,13 +79,14 @@ export const TopBar = () => {
   const classes = useStyles();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const list0: ListProps[] = [{ text: "Hjem", icon: <HomeIcon />, link: "/" }];
   const list1: ListProps[] = [
     { text: "Opprett ny økt", icon: <AddIcon />, link: "/newWorkout" },
     { text: "Tidligere økter", icon: <ListIcon />, link: "/allWorkouts" },
-    { text: "Forslagsbank", icon: <LightIcon />, link: "/suggestions" },
   ];
   const list2: ListProps[] = [
     { text: "Progresjonsgrafer", icon: <BarChartIcon />, link: "/chart" },
+    { text: "Forslagsbank", icon: <LightIcon />, link: "/suggestions" },
     { text: "Kalender", icon: <CalendarIcon />, link: "/calendar" },
   ];
 
@@ -91,7 +96,18 @@ export const TopBar = () => {
 
   const drawer = (
     <div className="drawer-container">
-      <div className={classes.toolbar} />
+      <List>
+        {list0.map((element: ListProps) => (
+          <Link to={element.link}>
+            <ListItem button key={element.text}>
+              <ListItemIcon className={classes.icon}>
+                {element.icon}
+              </ListItemIcon>
+              <ListItemText primary={element.text} />
+            </ListItem>
+          </Link>
+        ))}
+      </List>
       <Divider />
       <List>
         {list1.map((element: ListProps) => (
