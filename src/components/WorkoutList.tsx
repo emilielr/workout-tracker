@@ -122,6 +122,7 @@ export const WorkoutList = () => {
 
   return (
     <div className="workout-list">
+      <h1>Alle økter</h1>
       {workouts.map((workout: Workout, index: number) => {
         return <WorkoutCard workout={workout} key={index} />;
       })}

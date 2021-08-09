@@ -5,11 +5,14 @@ import { MainView } from "./views/MainView";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { WorkoutDetail } from "./views/WorkoutDetail";
 import { ChartPage } from "./views/ChartPage";
+import { TopBar } from "./components/TopBar";
+import { WorkoutList } from "./components/WorkoutList";
 
 function App() {
   return (
     <Router>
       <div className="App">
+        <TopBar />
         <Route path="/newWorkout">
           <WorkoutForm />
         </Route>
@@ -21,6 +24,9 @@ function App() {
         </Route>
         <Route path="/chart">
           <ChartPage />
+        </Route>
+        <Route path="/allWorkouts">
+          <WorkoutList />
         </Route>
       </div>
     </Router>
