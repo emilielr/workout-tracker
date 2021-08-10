@@ -5,7 +5,7 @@ import {
   Select,
   TablePagination,
 } from "@material-ui/core";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { db } from "../firebase";
 import { WorkoutCard } from "./WorkoutCard";
 import firebase from "firebase";
@@ -40,12 +40,7 @@ export const WorkoutList = () => {
   };
 
   const getNextPaginatedWorkouts = async () => {
-    let query: firebase.firestore.Query<firebase.firestore.DocumentData> =
-      db.collection("workouts");
-
-    if (category !== categoryEnum.all) {
-      query = query.where("category", "==", category);
-    }
+    const query = getQuery();
     await query
       .orderBy("date", "desc")
       .startAfter(nextPage)
@@ -70,12 +65,7 @@ export const WorkoutList = () => {
   };
 
   const getPrevPaginatedWorkouts = async () => {
-    let query: firebase.firestore.Query<firebase.firestore.DocumentData> =
-      db.collection("workouts");
-
-    if (category !== categoryEnum.all) {
-      query = query.where("category", "==", category);
-    }
+    const query = getQuery();
     await query
       .orderBy("date", "desc")
       .startAt(prevPage)
@@ -99,13 +89,18 @@ export const WorkoutList = () => {
       });
   };
 
-  useEffect(() => {
+  const getQuery = useCallback(() => {
     let query: firebase.firestore.Query<firebase.firestore.DocumentData> =
       db.collection("workouts");
 
     if (category !== categoryEnum.all) {
       query = query.where("category", "==", category);
     }
+    return query;
+  }, [category]);
+
+  useEffect(() => {
+    const query = getQuery();
     getWorkoutCount(query);
     query
       .orderBy("date", "desc")
@@ -125,7 +120,7 @@ export const WorkoutList = () => {
         setNextPage(querySnapshot.docs[querySnapshot.docs.length - 1]);
         setWorkouts(temp);
       });
-  }, [rowsPerPage, category]);
+  }, [rowsPerPage, getQuery]);
 
   const handleChangePage = (
     event: React.MouseEvent<HTMLButtonElement> | null,
@@ -150,6 +145,7 @@ export const WorkoutList = () => {
     event: React.ChangeEvent<{ value: unknown }>
   ) => {
     setCategory(event.target.value as categoryEnum);
+    setPage(0);
   };
 
   return (
