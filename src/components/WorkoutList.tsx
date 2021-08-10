@@ -151,7 +151,7 @@ export const WorkoutList = () => {
   return (
     <div className="workout-list">
       <h1>Alle økter</h1>
-      <div className="search">
+      <div className="filter-category">
         <span className="text">Filtrer etter kategori: </span>
         <FormControl>
           <InputLabel id="select-label"></InputLabel>
@@ -172,6 +172,7 @@ export const WorkoutList = () => {
           </Select>
         </FormControl>
       </div>
+      <br />
       {workouts.map((workout: Workout, index: number) => {
         return <WorkoutCard workout={workout} key={index} />;
       })}

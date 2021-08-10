@@ -82,7 +82,7 @@ export const TopBar = () => {
   const list0: ListProps[] = [{ text: "Hjem", icon: <HomeIcon />, link: "/" }];
   const list1: ListProps[] = [
     { text: "Opprett ny økt", icon: <AddIcon />, link: "/newWorkout" },
-    { text: "Tidligere økter", icon: <ListIcon />, link: "/allWorkouts" },
+    { text: "Tidligere økter", icon: <ListIcon />, link: "/workouts" },
   ];
   const list2: ListProps[] = [
     { text: "Progresjonsgrafer", icon: <BarChartIcon />, link: "/chart" },
