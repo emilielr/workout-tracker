@@ -20,3 +20,14 @@
   flex-direction: column;
   padding: 1rem 0;
 }
+
+.category {
+  margin-bottom: 2rem;
+}
+
+.MuiFormControl-root {
+  vertical-align: 0 !important;
+  #select {
+    width: 100%;
+  }
+}

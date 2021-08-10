@@ -25,7 +25,7 @@ function App() {
         <Route path="/chart">
           <ChartPage />
         </Route>
-        <Route path="/allWorkouts">
+        <Route path="/workouts">
           <WorkoutList />
         </Route>
       </div>

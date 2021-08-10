@@ -1,8 +1,15 @@
-import { TablePagination } from "@material-ui/core";
-import { useEffect, useState } from "react";
+import {
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  TablePagination,
+} from "@material-ui/core";
+import { useCallback, useEffect, useState } from "react";
 import { db } from "../firebase";
 import { WorkoutCard } from "./WorkoutCard";
 import firebase from "firebase";
+import { categoryEnum } from "../utils/enums";
 
 export const WorkoutList = () => {
   const [prevPage, setPrevPage] =
@@ -18,21 +25,23 @@ export const WorkoutList = () => {
   const [workouts, setWorkouts] = useState<Workout[]>([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [category, setCategory] = useState<categoryEnum>(categoryEnum.all);
 
-  const getWorkoutCount = () => {
+  const getWorkoutCount = (
+    query: firebase.firestore.Query<firebase.firestore.DocumentData>
+  ) => {
     let count = 0;
-    db.collection("workouts")
-      .get()
-      .then((querySnapshot) => {
-        querySnapshot.forEach(() => {
-          count++;
-        });
-        setWorkoutCount(count);
+    query.get().then((querySnapshot) => {
+      querySnapshot.forEach(() => {
+        count++;
       });
+      setWorkoutCount(count);
+    });
   };
 
-  const getNextPaginatedWorkouts = () => {
-    db.collection("workouts")
+  const getNextPaginatedWorkouts = async () => {
+    const query = getQuery();
+    await query
       .orderBy("date", "desc")
       .startAfter(nextPage)
       .limit(rowsPerPage)
@@ -55,8 +64,9 @@ export const WorkoutList = () => {
       });
   };
 
-  const getPrevPaginatedWorkouts = () => {
-    db.collection("workouts")
+  const getPrevPaginatedWorkouts = async () => {
+    const query = getQuery();
+    await query
       .orderBy("date", "desc")
       .startAt(prevPage)
       .limit(rowsPerPage)
@@ -79,9 +89,20 @@ export const WorkoutList = () => {
       });
   };
 
+  const getQuery = useCallback(() => {
+    let query: firebase.firestore.Query<firebase.firestore.DocumentData> =
+      db.collection("workouts");
+
+    if (category !== categoryEnum.all) {
+      query = query.where("category", "==", category);
+    }
+    return query;
+  }, [category]);
+
   useEffect(() => {
-    getWorkoutCount();
-    db.collection("workouts")
+    const query = getQuery();
+    getWorkoutCount(query);
+    query
       .orderBy("date", "desc")
       .limit(rowsPerPage)
       .get()
@@ -99,7 +120,7 @@ export const WorkoutList = () => {
         setNextPage(querySnapshot.docs[querySnapshot.docs.length - 1]);
         setWorkouts(temp);
       });
-  }, [rowsPerPage]);
+  }, [rowsPerPage, getQuery]);
 
   const handleChangePage = (
     event: React.MouseEvent<HTMLButtonElement> | null,
@@ -120,9 +141,38 @@ export const WorkoutList = () => {
     setPage(0);
   };
 
+  const handleCategoryChange = (
+    event: React.ChangeEvent<{ value: unknown }>
+  ) => {
+    setCategory(event.target.value as categoryEnum);
+    setPage(0);
+  };
+
   return (
     <div className="workout-list">
       <h1>Alle økter</h1>
+      <div className="filter-category">
+        <span className="text">Filtrer etter kategori: </span>
+        <FormControl>
+          <InputLabel id="select-label"></InputLabel>
+          <Select
+            id="select"
+            margin="dense"
+            value={category}
+            onChange={handleCategoryChange}
+          >
+            <MenuItem value={categoryEnum.all}>{categoryEnum.all}</MenuItem>
+            <MenuItem value={categoryEnum.fullbody}>
+              {categoryEnum.fullbody}
+            </MenuItem>
+            <MenuItem value={categoryEnum.upperbody}>
+              {categoryEnum.upperbody}
+            </MenuItem>
+            <MenuItem value={categoryEnum.legs}>{categoryEnum.legs}</MenuItem>
+          </Select>
+        </FormControl>
+      </div>
+      <br />
       {workouts.map((workout: Workout, index: number) => {
         return <WorkoutCard workout={workout} key={index} />;
       })}

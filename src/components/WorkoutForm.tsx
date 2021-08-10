@@ -1,7 +1,11 @@
 import { ChangeEvent } from "react";
 import {
   Button,
+  FormControl,
   InputBase,
+  InputLabel,
+  MenuItem,
+  Select,
   Table,
   TableBody,
   TableCell,
@@ -16,13 +20,13 @@ import { useState } from "react";
 import { db } from "../firebase";
 import AddIcon from "@material-ui/icons/AddCircle";
 import SaveIcon from "@material-ui/icons/Save";
-import { Link } from "react-router-dom";
-import { alertEnum } from "../utils/enums";
+import { alertEnum, categoryEnum } from "../utils/enums";
 import { AlertComponent } from "./AlertComponent";
 
 export const WorkoutForm = () => {
   const [workoutName, setWorkoutName] = useState("");
   const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
+  const [category, setCategory] = useState<categoryEnum>(categoryEnum.empty);
   const [rows, setRows] = useState<Exercise[]>([]);
   const [alert, setAlert] = useState<alertEnum>();
   const [openAlert, setOpenAlert] = useState(false);
@@ -39,34 +43,57 @@ export const WorkoutForm = () => {
       setExercise({ ...exercise, [prop]: event.target.value });
     };
 
+  const handleCategoryChange = (
+    event: React.ChangeEvent<{ value: unknown }>
+  ) => {
+    setCategory(event.target.value as categoryEnum);
+  };
+
+  const allFieldsFilledOut = () => {
+    return (
+      workoutName !== "" && category !== categoryEnum.empty && rows.length !== 0
+    );
+  };
+
   const addRow = () => {
     setRows([...rows!, exercise]);
     setExercise({ name: "", sets: "", reps: "", kg: "" });
   };
 
+  const resetFields = () => {
+    setWorkoutName("");
+    setCategory(categoryEnum.empty);
+    setRows([]);
+    setExercise({ name: "", sets: "", reps: "", kg: "" });
+  };
+
   const saveWorkout = () => {
     setOpenAlert(true);
-    db.collection("workouts")
-      .add({
-        workoutName: workoutName,
-        date: selectedDate,
-        exercises: rows,
-      })
-      .then(() => {
-        setAlertMessage("Du har lagt til en ny treningsøkt!");
-        setAlert(alertEnum.success);
-      })
-      .catch(() => {
-        setAlertMessage("Noe gikk galt under lagringen.");
-        setAlert(alertEnum.error);
-      });
+    if (!allFieldsFilledOut()) {
+      setAlertMessage("Du har ikke fyllt ut alle feltene");
+      setAlert(alertEnum.error);
+    } else {
+      db.collection("workouts")
+        .add({
+          workoutName: workoutName,
+          date: selectedDate,
+          category: category,
+          exercises: rows,
+        })
+        .then(() => {
+          setAlertMessage("Du har lagt til en ny treningsøkt!");
+          setAlert(alertEnum.success);
+          resetFields();
+        })
+        .catch(() => {
+          setAlertMessage("Noe gikk galt under lagringen.");
+          setAlert(alertEnum.error);
+        });
+    }
   };
 
   return (
     <div className="table-container">
-      <Button component={Link} to="/" variant="outlined">
-        Tilbake
-      </Button>
       {openAlert && (
         <AlertComponent
           severity={alert!}
@@ -96,6 +123,26 @@ export const WorkoutForm = () => {
             onChange={(event) => setSelectedDate(new Date(event.target.value))}
           />
         </div>
+      </div>
+      <div className="category">
+        <span className="text">Velg kategori: </span>
+        <FormControl>
+          <InputLabel id="select-label"></InputLabel>
+          <Select
+            id="select"
+            margin="dense"
+            value={category}
+            onChange={handleCategoryChange}
+          >
+            <MenuItem value={categoryEnum.fullbody}>
+              {categoryEnum.fullbody}
+            </MenuItem>
+            <MenuItem value={categoryEnum.upperbody}>
+              {categoryEnum.upperbody}
+            </MenuItem>
+            <MenuItem value={categoryEnum.legs}>{categoryEnum.legs}</MenuItem>
+          </Select>
+        </FormControl>
       </div>
       <TableContainer>
         <Table size="small">

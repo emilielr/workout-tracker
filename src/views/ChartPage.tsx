@@ -1,6 +1,5 @@
 import { Button, TextField } from "@material-ui/core";
 import { useState } from "react";
-import { Link } from "react-router-dom";
 import { LineChartComponent } from "../components/LineChart";
 import { db } from "../firebase";
 import { usePrevious } from "../utils/comparison";
@@ -37,9 +36,6 @@ export const ChartPage = () => {
   };
   return (
     <div className="chart-container">
-      <Button component={Link} to="/" variant="outlined">
-        Tilbake
-      </Button>
       <h1>Progresjonsgraf</h1>
       <div className="search-container">
         <p>Skriv inn hvilken øvelse du vil se:</p>

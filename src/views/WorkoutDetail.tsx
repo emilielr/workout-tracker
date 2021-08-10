@@ -21,7 +21,7 @@ export const WorkoutDetail = () => {
 
   return (
     <div className="detail-container">
-      <Button component={Link} to="/" variant="outlined">
+      <Button component={Link} to="/workouts" variant="outlined">
         Tilbake
       </Button>
       <h1>{workout.workoutName}</h1>
