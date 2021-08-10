@@ -60,6 +60,13 @@ export const WorkoutForm = () => {
     setExercise({ name: "", sets: "", reps: "", kg: "" });
   };
 
+  const resetFields = () => {
+    setWorkoutName("");
+    setCategory(categoryEnum.empty);
+    setRows([]);
+    setExercise({ name: "", sets: "", reps: "", kg: "" });
+  };
+
   const saveWorkout = () => {
     setOpenAlert(true);
     if (!allFieldsFilledOut()) {
@@ -76,6 +83,7 @@ export const WorkoutForm = () => {
         .then(() => {
           setAlertMessage("Du har lagt til en ny treningsøkt!");
           setAlert(alertEnum.success);
+          resetFields();
         })
         .catch(() => {
           setAlertMessage("Noe gikk galt under lagringen.");
@@ -119,7 +127,7 @@ export const WorkoutForm = () => {
       <div className="category">
         <span className="text">Velg kategori: </span>
         <FormControl>
-          <InputLabel id="demo-simple-select-label"></InputLabel>
+          <InputLabel id="select-label"></InputLabel>
           <Select
             id="select"
             margin="dense"

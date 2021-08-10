@@ -10,4 +10,5 @@ export enum categoryEnum {
   fullbody = "Helkropp",
   legs = "Bein",
   empty = "",
+  all = "Alle",
 }
