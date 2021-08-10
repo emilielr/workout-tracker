@@ -1,5 +1,4 @@
 import {
-  Button,
   Table,
   TableBody,
   TableCell,
@@ -8,7 +7,7 @@ import {
   TableRow,
 } from "@material-ui/core";
 import "../components/Form.scss";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { formatDate } from "../utils/date";
 
 type LocationState = {
@@ -21,9 +20,6 @@ export const WorkoutDetail = () => {
 
   return (
     <div className="detail-container">
-      <Button component={Link} to="/" variant="outlined">
-        Tilbake
-      </Button>
       <h1>{workout.workoutName}</h1>
       <h2>{formatDate(workout.date)}</h2>
       <TableContainer>

@@ -4,3 +4,10 @@ export enum alertEnum {
   success = "success",
   warning = "warning",
 }
+
+export enum categoryEnum {
+  upperbody = "Overkropp",
+  fullbody = "Helkropp",
+  legs = "Bein",
+  empty = "",
+}
