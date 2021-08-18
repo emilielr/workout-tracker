@@ -11,3 +11,13 @@
     margin-left: 1rem;
   }
 }
+
+.MuiList-root.MuiMenu-list {
+  max-height: 300px;
+}
+
+.rep-range {
+  display: flex;
+  flex-direction: row;
+  padding-bottom: 2rem;
+}

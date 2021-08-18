@@ -24,6 +24,7 @@ export const LineChartComponent = ({ data }: Props) => {
           <p className="value">
             Vekt: {payload[0].payload.kg + payload[0].name}
           </p>
+          <p>Reps: {payload[0].payload.reps}</p>
         </div>
       );
     }

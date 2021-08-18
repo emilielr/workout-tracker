@@ -1,0 +1,38 @@
+.MuiTableCell-head {
+  background-color: #ededed;
+  font-weight: 700 !important;
+  &.sets,
+  &.reps,
+  &.kg {
+    width: 9rem;
+  }
+}
+
+.MuiInputBase-input,
+.MuiTableCell-root {
+  text-align: right;
+}
+
+.MuiInputBase-root.name {
+  .MuiInputBase-input {
+    text-align: left !important;
+  }
+}
+
+.MuiTableBody-root {
+  .MuiTableCell-body:not(:first-child) {
+    .MuiInputBase-root {
+      width: 36%;
+    }
+  }
+}
+
+.reps-input {
+  .MuiInputBase-root {
+    width: 20% !important;
+  }
+}
+
+.MuiTableCell-root:not(:first-child) {
+  text-align: right !important;
+}

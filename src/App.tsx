@@ -1,12 +1,11 @@
-import React from "react";
 import "./App.css";
-import { WorkoutForm } from "./components/WorkoutForm";
 import { MainView } from "./views/MainView";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { WorkoutDetail } from "./views/WorkoutDetail";
 import { ChartPage } from "./views/ChartPage";
 import { TopBar } from "./components/TopBar";
 import { WorkoutList } from "./components/WorkoutList";
+import { DetailedWorkoutForm } from "./components/DetailedWorkoutForm";
 
 function App() {
   return (
@@ -14,7 +13,7 @@ function App() {
       <div className="App">
         <TopBar />
         <Route path="/newWorkout">
-          <WorkoutForm />
+          <DetailedWorkoutForm />
         </Route>
         <Route exact path="/">
           <MainView />
