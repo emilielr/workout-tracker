@@ -1,0 +1,27 @@
+.MuiTableCell-head {
+  background-color: #ededed;
+  font-weight: 700 !important;
+  &.sets,
+  &.reps,
+  &.kg {
+    width: 9rem;
+  }
+}
+
+.MuiInputBase-input {
+  text-align: right;
+}
+
+.MuiInputBase-root.name {
+  .MuiInputBase-input {
+    text-align: left !important;
+  }
+}
+
+.MuiTableBody-root {
+  .MuiTableCell-body:not(:first-child) {
+    .MuiInputBase-root {
+      width: 35%;
+    }
+  }
+}

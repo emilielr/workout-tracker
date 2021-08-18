@@ -98,7 +98,7 @@ export const TopBar = () => {
     <div className="drawer-container">
       <List>
         {list0.map((element: ListProps) => (
-          <Link to={element.link}>
+          <Link to={element.link} key={element.link}>
             <ListItem button key={element.text}>
               <ListItemIcon className={classes.icon}>
                 {element.icon}
@@ -111,7 +111,7 @@ export const TopBar = () => {
       <Divider />
       <List>
         {list1.map((element: ListProps) => (
-          <Link to={element.link}>
+          <Link to={element.link} key={element.link}>
             <ListItem button key={element.text}>
               <ListItemIcon className={classes.icon}>
                 {element.icon}
@@ -124,7 +124,7 @@ export const TopBar = () => {
       <Divider />
       <List>
         {list2.map((element: ListProps) => (
-          <Link to={element.link}>
+          <Link to={element.link} key={element.link}>
             <ListItem button key={element.text}>
               <ListItemIcon className={classes.icon}>
                 {element.icon}

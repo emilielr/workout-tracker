@@ -15,33 +15,48 @@ import {
   TextField,
 } from "@material-ui/core";
 import "./WorkoutForm.scss";
-import "./Form.scss";
+import "./DetailedForm.scss";
 import { useState } from "react";
 import { db } from "../firebase";
 import AddIcon from "@material-ui/icons/AddCircle";
 import SaveIcon from "@material-ui/icons/Save";
 import { alertEnum, categoryEnum } from "../utils/enums";
 import { AlertComponent } from "./AlertComponent";
-import { DetailedWorkoutForm } from "./DetailedWorkoutForm";
 
-export const WorkoutForm = () => {
+export const emptySet: Sett = {
+  kg: "",
+  reps: "",
+};
+
+export const DetailedWorkoutForm = () => {
   const [workoutName, setWorkoutName] = useState("");
   const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
   const [category, setCategory] = useState<categoryEnum>(categoryEnum.empty);
-  const [rows, setRows] = useState<Exercise[]>([]);
+  const [rows, setRows] = useState<Exercise2[]>([]);
   const [alert, setAlert] = useState<alertEnum>();
   const [openAlert, setOpenAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
-  const [exercise, setExercise] = useState<Exercise>({
+
+  const [exercise, setExercise] = useState<Exercise2>({
     name: "",
-    sets: "",
-    reps: "",
-    kg: "",
+    set1: emptySet,
+    set2: emptySet,
+    set3: emptySet,
+    set4: emptySet,
+    set5: emptySet,
   });
 
-  const handleChange =
-    (prop: keyof Exercise) => (event: ChangeEvent<HTMLInputElement>) => {
-      setExercise({ ...exercise, [prop]: event.target.value });
+  const handleNameChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setExercise({ ...exercise, name: event.target.value });
+  };
+
+  const handleSetChange =
+    (set: keyof Exercise2, prop: keyof Sett) =>
+    (event: ChangeEvent<HTMLInputElement>) => {
+      setExercise({
+        ...exercise,
+        [set]: { ...(exercise[set] as Sett), [prop]: event.target.value },
+      });
     };
 
   const handleCategoryChange = (
@@ -58,14 +73,28 @@ export const WorkoutForm = () => {
 
   const addRow = () => {
     setRows([...rows!, exercise]);
-    setExercise({ name: "", sets: "", reps: "", kg: "" });
+    setExercise({
+      name: "",
+      set1: emptySet,
+      set2: emptySet,
+      set3: emptySet,
+      set4: emptySet,
+      set5: emptySet,
+    });
   };
 
   const resetFields = () => {
     setWorkoutName("");
     setCategory(categoryEnum.empty);
     setRows([]);
-    setExercise({ name: "", sets: "", reps: "", kg: "" });
+    setExercise({
+      name: "",
+      set1: emptySet,
+      set2: emptySet,
+      set3: emptySet,
+      set4: emptySet,
+      set5: emptySet,
+    });
   };
 
   const saveWorkout = () => {
@@ -151,24 +180,42 @@ export const WorkoutForm = () => {
             <TableRow>
               <TableCell>Øvelse</TableCell>
               <TableCell align="right" className="sets">
-                Sett
+                Sett 1
               </TableCell>
               <TableCell align="right" className="reps">
-                Reps
+                Sett 2
               </TableCell>
               <TableCell align="right" className="kg">
-                Kg
+                Sett 3
+              </TableCell>
+              <TableCell align="right" className="kg">
+                Sett 4
+              </TableCell>
+              <TableCell align="right" className="kg">
+                Sett 5
               </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows?.map((row: Exercise) => {
+            {rows?.map((row: Exercise2) => {
               return (
                 <TableRow key={row.name}>
                   <TableCell>{row.name}</TableCell>
-                  <TableCell align="right">{row.sets}</TableCell>
-                  <TableCell align="right">{row.reps}</TableCell>
-                  <TableCell align="right">{row.kg}</TableCell>
+                  <TableCell align="right">
+                    {row.set1.kg} / {row.set1.reps}
+                  </TableCell>
+                  <TableCell align="right">
+                    {row.set2.kg} / {row.set2.reps}
+                  </TableCell>
+                  <TableCell align="right">
+                    {row.set3.kg} / {row.set3.reps}
+                  </TableCell>
+                  <TableCell align="right">
+                    {row.set4.kg} / {row.set4.reps}
+                  </TableCell>
+                  <TableCell align="right">
+                    {row.set5.kg} / {row.set5.reps}
+                  </TableCell>
                 </TableRow>
               );
             })}
@@ -178,30 +225,85 @@ export const WorkoutForm = () => {
                   className="name"
                   placeholder="Skriv her.."
                   value={exercise.name}
-                  onChange={handleChange("name")}
+                  onChange={handleNameChange}
                   required={true}
                 ></InputBase>
               </TableCell>
               <TableCell align="right">
                 <InputBase
-                  placeholder="Skriv her.."
-                  value={exercise.sets}
-                  onChange={handleChange("sets")}
+                  placeholder="kg"
+                  value={exercise.set1?.kg}
+                  onChange={handleSetChange("set1", "kg")}
                 ></InputBase>
+                <span>
+                  {" "}
+                  /
+                  <InputBase
+                    placeholder="x"
+                    value={exercise.set1?.reps}
+                    onChange={handleSetChange("set1", "reps")}
+                  ></InputBase>
+                </span>
               </TableCell>
               <TableCell align="right">
                 <InputBase
-                  placeholder="Skriv her.."
-                  value={exercise.reps}
-                  onChange={handleChange("reps")}
-                ></InputBase>
+                  placeholder="kg"
+                  value={exercise.set2?.kg}
+                  onChange={handleSetChange("set2", "kg")}
+                ></InputBase>{" "}
+                <span>
+                  /
+                  <InputBase
+                    placeholder="x"
+                    value={exercise.set2?.reps}
+                    onChange={handleSetChange("set2", "reps")}
+                  ></InputBase>{" "}
+                </span>
               </TableCell>
               <TableCell align="right">
                 <InputBase
-                  placeholder="Skriv her.."
-                  value={exercise.kg}
-                  onChange={handleChange("kg")}
-                ></InputBase>
+                  placeholder="kg"
+                  value={exercise.set3?.kg}
+                  onChange={handleSetChange("set3", "kg")}
+                ></InputBase>{" "}
+                <span>
+                  /
+                  <InputBase
+                    placeholder="x"
+                    value={exercise.set3?.reps}
+                    onChange={handleSetChange("set3", "reps")}
+                  ></InputBase>{" "}
+                </span>
+              </TableCell>
+              <TableCell align="right">
+                <InputBase
+                  placeholder="xx.x"
+                  value={exercise.set4?.kg}
+                  onChange={handleSetChange("set4", "kg")}
+                ></InputBase>{" "}
+                <span>
+                  /
+                  <InputBase
+                    placeholder="x"
+                    value={exercise.set4?.reps}
+                    onChange={handleSetChange("set4", "reps")}
+                  ></InputBase>{" "}
+                </span>
+              </TableCell>
+              <TableCell align="right">
+                <InputBase
+                  placeholder="kg"
+                  value={exercise.set5?.kg}
+                  onChange={handleSetChange("set5", "kg")}
+                ></InputBase>{" "}
+                <span>
+                  /
+                  <InputBase
+                    placeholder="x"
+                    value={exercise.set5?.reps}
+                    onChange={handleSetChange("set5", "reps")}
+                  ></InputBase>{" "}
+                </span>
               </TableCell>
             </TableRow>
           </TableBody>
@@ -220,12 +322,6 @@ export const WorkoutForm = () => {
           Lagre treningsøkt
         </Button>
       </div>
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <DetailedWorkoutForm />
     </div>
   );
 };
