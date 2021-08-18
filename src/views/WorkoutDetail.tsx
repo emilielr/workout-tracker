@@ -7,7 +7,7 @@ import {
   TableHead,
   TableRow,
 } from "@material-ui/core";
-import "../components/DetailedForm.scss";
+import "../components/DetailedWorkoutForm.scss";
 import { Link, useLocation } from "react-router-dom";
 import { formatDate } from "../utils/date";
 
