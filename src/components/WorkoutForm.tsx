@@ -22,7 +22,6 @@ import AddIcon from "@material-ui/icons/AddCircle";
 import SaveIcon from "@material-ui/icons/Save";
 import { alertEnum, categoryEnum } from "../utils/enums";
 import { AlertComponent } from "./AlertComponent";
-import { DetailedWorkoutForm } from "./DetailedWorkoutForm";
 
 export const WorkoutForm = () => {
   const [workoutName, setWorkoutName] = useState("");
@@ -220,12 +219,6 @@ export const WorkoutForm = () => {
           Lagre treningsøkt
         </Button>
       </div>
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <DetailedWorkoutForm />
     </div>
   );
 };

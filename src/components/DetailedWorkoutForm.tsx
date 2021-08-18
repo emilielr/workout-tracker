@@ -122,6 +122,38 @@ export const DetailedWorkoutForm = () => {
     }
   };
 
+  const allInputSets = [
+    exercise.set1,
+    exercise.set2,
+    exercise.set3,
+    exercise.set4,
+    exercise.set5,
+  ];
+
+  const renderInputSets = () => {
+    return allInputSets.map((set: Sett, index: number) => {
+      const setName = ("set" + (index + 1).toString()) as keyof Exercise2;
+      return (
+        <TableCell align="right">
+          <InputBase
+            placeholder="kg"
+            value={set.kg}
+            onChange={handleSetChange(setName, "kg")}
+          ></InputBase>
+          <span>
+            {" "}
+            /
+            <InputBase
+              placeholder="x"
+              value={set.reps}
+              onChange={handleSetChange(setName, "reps")}
+            ></InputBase>
+          </span>
+        </TableCell>
+      );
+    });
+  };
+
   return (
     <div className="table-container">
       {openAlert && (
@@ -229,82 +261,7 @@ export const DetailedWorkoutForm = () => {
                   required={true}
                 ></InputBase>
               </TableCell>
-              <TableCell align="right">
-                <InputBase
-                  placeholder="kg"
-                  value={exercise.set1?.kg}
-                  onChange={handleSetChange("set1", "kg")}
-                ></InputBase>
-                <span>
-                  {" "}
-                  /
-                  <InputBase
-                    placeholder="x"
-                    value={exercise.set1?.reps}
-                    onChange={handleSetChange("set1", "reps")}
-                  ></InputBase>
-                </span>
-              </TableCell>
-              <TableCell align="right">
-                <InputBase
-                  placeholder="kg"
-                  value={exercise.set2?.kg}
-                  onChange={handleSetChange("set2", "kg")}
-                ></InputBase>{" "}
-                <span>
-                  /
-                  <InputBase
-                    placeholder="x"
-                    value={exercise.set2?.reps}
-                    onChange={handleSetChange("set2", "reps")}
-                  ></InputBase>{" "}
-                </span>
-              </TableCell>
-              <TableCell align="right">
-                <InputBase
-                  placeholder="kg"
-                  value={exercise.set3?.kg}
-                  onChange={handleSetChange("set3", "kg")}
-                ></InputBase>{" "}
-                <span>
-                  /
-                  <InputBase
-                    placeholder="x"
-                    value={exercise.set3?.reps}
-                    onChange={handleSetChange("set3", "reps")}
-                  ></InputBase>{" "}
-                </span>
-              </TableCell>
-              <TableCell align="right">
-                <InputBase
-                  placeholder="xx.x"
-                  value={exercise.set4?.kg}
-                  onChange={handleSetChange("set4", "kg")}
-                ></InputBase>{" "}
-                <span>
-                  /
-                  <InputBase
-                    placeholder="x"
-                    value={exercise.set4?.reps}
-                    onChange={handleSetChange("set4", "reps")}
-                  ></InputBase>{" "}
-                </span>
-              </TableCell>
-              <TableCell align="right">
-                <InputBase
-                  placeholder="kg"
-                  value={exercise.set5?.kg}
-                  onChange={handleSetChange("set5", "kg")}
-                ></InputBase>{" "}
-                <span>
-                  /
-                  <InputBase
-                    placeholder="x"
-                    value={exercise.set5?.reps}
-                    onChange={handleSetChange("set5", "reps")}
-                  ></InputBase>{" "}
-                </span>
-              </TableCell>
+              {renderInputSets()}
             </TableRow>
           </TableBody>
         </Table>
