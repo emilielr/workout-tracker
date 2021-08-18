@@ -7,7 +7,7 @@ import {
   TableHead,
   TableRow,
 } from "@material-ui/core";
-import "../components/Form.scss";
+import "../components/DetailedForm.scss";
 import { Link, useLocation } from "react-router-dom";
 import { formatDate } from "../utils/date";
 
@@ -31,25 +31,49 @@ export const WorkoutDetail = () => {
           <TableHead>
             <TableRow>
               <TableCell>Øvelse</TableCell>
-              <TableCell align="right" className="sets">
-                Sett
+              <TableCell align="right" className="set1">
+                Sett 1
               </TableCell>
-              <TableCell align="right" className="reps">
-                Reps
+              <TableCell align="right" className="set2">
+                Sett 2
               </TableCell>
-              <TableCell align="right" className="kg">
-                Kg
+              <TableCell align="right" className="set3">
+                Sett 3
+              </TableCell>
+              <TableCell align="right" className="set4">
+                Sett 4
+              </TableCell>
+              <TableCell align="right" className="set5">
+                Sett 5
               </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {workout.exercises.map((exercise: Exercise, index: number) => {
+            {workout.exercises.map((exercise: Exercise2, index: number) => {
+              const allSets = [
+                exercise.set1,
+                exercise.set2,
+                exercise.set3,
+                exercise.set4,
+                exercise.set5,
+              ];
+
               return (
                 <TableRow key={index}>
                   <TableCell>{exercise.name}</TableCell>
-                  <TableCell align="right">{exercise.sets}</TableCell>
-                  <TableCell align="right">{exercise.reps}</TableCell>
-                  <TableCell align="right">{exercise.kg}</TableCell>
+                  {allSets.map((set: Sett, index: number) => {
+                    return (
+                      <TableCell key={index}>
+                        {set.kg === "" && set.reps === "" ? (
+                          ""
+                        ) : (
+                          <div>
+                            {set.kg} kg / {set.reps}
+                          </div>
+                        )}
+                      </TableCell>
+                    );
+                  })}
                 </TableRow>
               );
             })}

@@ -8,7 +8,8 @@
   }
 }
 
-.MuiInputBase-input {
+.MuiInputBase-input,
+.MuiTableCell-root {
   text-align: right;
 }
 
@@ -24,4 +25,14 @@
       width: 36%;
     }
   }
+}
+
+.reps-input {
+  .MuiInputBase-root {
+    width: 20% !important;
+  }
+}
+
+.MuiTableCell-root:not(:first-child) {
+  text-align: right !important;
 }

@@ -4,7 +4,7 @@ type Workout = {
   id: string;
   workoutName: string;
   date: Date;
-  exercises: Exercise[];
+  exercises: Exercise2[];
 };
 
 type Exercise = {

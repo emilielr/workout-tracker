@@ -134,15 +134,14 @@ export const DetailedWorkoutForm = () => {
     return allInputSets.map((set: Sett, index: number) => {
       const setName = ("set" + (index + 1).toString()) as keyof Exercise2;
       return (
-        <TableCell align="right">
+        <TableCell align="right" key={index}>
           <InputBase
-            placeholder="kg"
+            placeholder="x"
             value={set.kg}
             onChange={handleSetChange(setName, "kg")}
-          ></InputBase>
-          <span>
-            {" "}
-            /
+          ></InputBase>{" "}
+          kg /{" "}
+          <span className="reps-input">
             <InputBase
               placeholder="x"
               value={set.reps}
@@ -211,43 +210,49 @@ export const DetailedWorkoutForm = () => {
           <TableHead>
             <TableRow>
               <TableCell>Øvelse</TableCell>
-              <TableCell align="right" className="sets">
+              <TableCell align="right" className="set1">
                 Sett 1
               </TableCell>
-              <TableCell align="right" className="reps">
+              <TableCell align="right" className="set2">
                 Sett 2
               </TableCell>
-              <TableCell align="right" className="kg">
+              <TableCell align="right" className="set3">
                 Sett 3
               </TableCell>
-              <TableCell align="right" className="kg">
+              <TableCell align="right" className="set4">
                 Sett 4
               </TableCell>
-              <TableCell align="right" className="kg">
+              <TableCell align="right" className="set5">
                 Sett 5
               </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {rows?.map((row: Exercise2) => {
+              const allSets = [
+                row.set1,
+                row.set2,
+                row.set3,
+                row.set4,
+                row.set5,
+              ];
+
               return (
                 <TableRow key={row.name}>
                   <TableCell>{row.name}</TableCell>
-                  <TableCell align="right">
-                    {row.set1.kg} / {row.set1.reps}
-                  </TableCell>
-                  <TableCell align="right">
-                    {row.set2.kg} / {row.set2.reps}
-                  </TableCell>
-                  <TableCell align="right">
-                    {row.set3.kg} / {row.set3.reps}
-                  </TableCell>
-                  <TableCell align="right">
-                    {row.set4.kg} / {row.set4.reps}
-                  </TableCell>
-                  <TableCell align="right">
-                    {row.set5.kg} / {row.set5.reps}
-                  </TableCell>
+                  {allSets.map((set: Sett, index: number) => {
+                    return (
+                      <TableCell key={index}>
+                        {set.kg === "" && set.reps === "" ? (
+                          ""
+                        ) : (
+                          <div>
+                            {set.kg} kg / {set.reps}
+                          </div>
+                        )}
+                      </TableCell>
+                    );
+                  })}
                 </TableRow>
               );
             })}

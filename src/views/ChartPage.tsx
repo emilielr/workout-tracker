@@ -6,6 +6,7 @@ import {
   Select,
   TextField,
 } from "@material-ui/core";
+import { useEffect } from "react";
 import { useState } from "react";
 import { emptySet } from "../components/DetailedWorkoutForm";
 import { LineChartComponent } from "../components/LineChart";
@@ -23,31 +24,6 @@ export const ChartPage = () => {
   const repRange = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
 
   const prevData = usePrevious(data);
-
-  /*
-  const getExercise = (e: string) => {
-    if (data === prevData) {
-      db.collection("workouts")
-        .orderBy("date")
-        .get()
-        .then((querySnapshot) => {
-          let tempData: LineChartData[] = [];
-          querySnapshot.forEach((doc) => {
-            doc.data().exercises.forEach((exercise: Exercise) => {
-              if (exercise.name.toLowerCase().includes(e.toLowerCase())) {
-                tempData.push({
-                  date: simpleFormatDate(doc.data().date.toDate()),
-                  kg: exercise.kg,
-                  name: exercise.name,
-                });
-              }
-            });
-          });
-          setData(tempData);
-        });
-    }
-  };
-  */
 
   const isSetInRepRange = (reps: string) => {
     return Number(reps) <= upperBound && Number(reps) >= lowerBound
@@ -114,7 +90,17 @@ export const ChartPage = () => {
 
   const handleUpperBound = (event: React.ChangeEvent<{ value: unknown }>) => {
     setUpperBound(Number(event.target.value));
+    if (lowerBound > Number(event.target.value)) {
+      setLowerBound(Number(event.target.value));
+    }
   };
+
+  useEffect(() => {
+    if (userInput !== "") {
+      getExercise2(userInput);
+    }
+    // eslint-disable-next-line
+  }, [lowerBound, upperBound]);
 
   return (
     <div className="chart-container">
@@ -139,7 +125,7 @@ export const ChartPage = () => {
       </div>
       <div className="rep-range">
         <div className="low-rep-range">
-          Velg laveste rep-range:
+          Velg reps mellom:
           <FormControl>
             <InputLabel id="select-label"></InputLabel>
             <Select
@@ -159,7 +145,7 @@ export const ChartPage = () => {
           </FormControl>
         </div>
         <div className="high-rep-range">
-          Velg høyeste rep-range:
+          og:{" "}
           <FormControl>
             <InputLabel id="select-label"></InputLabel>
             <Select
@@ -168,7 +154,7 @@ export const ChartPage = () => {
               value={upperBound}
               onChange={handleUpperBound}
             >
-              {repRange.slice(lowerBound - 1).map((rep: number) => {
+              {repRange.map((rep: number) => {
                 return (
                   <MenuItem key={rep} value={rep}>
                     {rep}
