@@ -49,7 +49,7 @@ export const WorkoutDetail = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {workout.exercises.map((exercise: Exercise2, index: number) => {
+            {workout.exercises.map((exercise: Exercise, index: number) => {
               const allSets = [
                 exercise.set1,
                 exercise.set2,

@@ -35,7 +35,7 @@ export const ChartPage = () => {
   Get sets on exercise and display the set with highest weight (kg)
   in the rep range. Rep range is set by user, and is default set to 8-10
   */
-  const getExercise2 = (e: string) => {
+  const getExercise = (e: string) => {
     if (data === prevData) {
       db.collection("workouts")
         .orderBy("date")
@@ -45,7 +45,7 @@ export const ChartPage = () => {
           let highestKg = 0;
           let bestSet = emptySet;
           querySnapshot.forEach((doc) => {
-            doc.data().exercises.forEach((exercise: Exercise2) => {
+            doc.data().exercises.forEach((exercise: Exercise) => {
               if (exercise.name.toLowerCase() === e.toLowerCase()) {
                 const allSets = [
                   exercise.set1,
@@ -97,7 +97,7 @@ export const ChartPage = () => {
 
   useEffect(() => {
     if (userInput !== "") {
-      getExercise2(userInput);
+      getExercise(userInput);
     }
     // eslint-disable-next-line
   }, [lowerBound, upperBound]);
@@ -118,7 +118,7 @@ export const ChartPage = () => {
           disabled={userInput === "" ? true : false}
           variant="outlined"
           size="small"
-          onClick={() => getExercise2(userInput)}
+          onClick={() => getExercise(userInput)}
         >
           Søk
         </Button>

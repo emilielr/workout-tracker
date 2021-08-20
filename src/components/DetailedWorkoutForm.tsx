@@ -32,12 +32,12 @@ export const DetailedWorkoutForm = () => {
   const [workoutName, setWorkoutName] = useState("");
   const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
   const [category, setCategory] = useState<categoryEnum>(categoryEnum.empty);
-  const [rows, setRows] = useState<Exercise2[]>([]);
+  const [rows, setRows] = useState<Exercise[]>([]);
   const [alert, setAlert] = useState<alertEnum>();
   const [openAlert, setOpenAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
 
-  const [exercise, setExercise] = useState<Exercise2>({
+  const [exercise, setExercise] = useState<Exercise>({
     name: "",
     set1: emptySet,
     set2: emptySet,
@@ -51,7 +51,7 @@ export const DetailedWorkoutForm = () => {
   };
 
   const handleSetChange =
-    (set: keyof Exercise2, prop: keyof Sett) =>
+    (set: keyof Exercise, prop: keyof Sett) =>
     (event: ChangeEvent<HTMLInputElement>) => {
       setExercise({
         ...exercise,
@@ -132,7 +132,7 @@ export const DetailedWorkoutForm = () => {
 
   const renderInputSets = () => {
     return allInputSets.map((set: Sett, index: number) => {
-      const setName = ("set" + (index + 1).toString()) as keyof Exercise2;
+      const setName = ("set" + (index + 1).toString()) as keyof Exercise;
       return (
         <TableCell align="right" key={index}>
           <InputBase
@@ -228,7 +228,7 @@ export const DetailedWorkoutForm = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows?.map((row: Exercise2) => {
+            {rows?.map((row: Exercise) => {
               const allSets = [
                 row.set1,
                 row.set2,

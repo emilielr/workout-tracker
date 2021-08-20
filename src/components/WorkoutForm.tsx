@@ -23,15 +23,22 @@ import SaveIcon from "@material-ui/icons/Save";
 import { alertEnum, categoryEnum } from "../utils/enums";
 import { AlertComponent } from "./AlertComponent";
 
+type SimpleExercise = {
+  name: string;
+  sets: string;
+  reps: string;
+  kg: string;
+};
+
 export const WorkoutForm = () => {
   const [workoutName, setWorkoutName] = useState("");
   const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
   const [category, setCategory] = useState<categoryEnum>(categoryEnum.empty);
-  const [rows, setRows] = useState<Exercise[]>([]);
+  const [rows, setRows] = useState<SimpleExercise[]>([]);
   const [alert, setAlert] = useState<alertEnum>();
   const [openAlert, setOpenAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
-  const [exercise, setExercise] = useState<Exercise>({
+  const [exercise, setExercise] = useState<SimpleExercise>({
     name: "",
     sets: "",
     reps: "",
@@ -39,7 +46,7 @@ export const WorkoutForm = () => {
   });
 
   const handleChange =
-    (prop: keyof Exercise) => (event: ChangeEvent<HTMLInputElement>) => {
+    (prop: keyof SimpleExercise) => (event: ChangeEvent<HTMLInputElement>) => {
       setExercise({ ...exercise, [prop]: event.target.value });
     };
 
@@ -161,7 +168,7 @@ export const WorkoutForm = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows?.map((row: Exercise) => {
+            {rows?.map((row: SimpleExercise) => {
               return (
                 <TableRow key={row.name}>
                   <TableCell>{row.name}</TableCell>
