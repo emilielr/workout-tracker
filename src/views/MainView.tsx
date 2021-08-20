@@ -1,6 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import { Button } from "@material-ui/core";
+import { PieChartComponent } from "../components/charts/PieChart";
 
 export const MainView = () => {
   return (
@@ -16,10 +15,7 @@ export const MainView = () => {
         slik at man enkelt kan tilpasse og optimalisere trening slik at man får
         maks utbytte. LOL.
       </p>
-      <br /> <br />
-      <Button component={Link} to="/newWorkout" variant="outlined">
-        Opprett ny treningsøkt
-      </Button>
+      <PieChartComponent />
     </div>
   );
 };

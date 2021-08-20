@@ -21,6 +21,11 @@ type LineChartData = {
   name: string;
 };
 
+type PieChartData = {
+  count: number;
+  category: categoryEnum;
+};
+
 type Exercise2 = {
   name: string;
   set1: Sett;

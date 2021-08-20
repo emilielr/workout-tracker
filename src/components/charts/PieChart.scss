@@ -1,0 +1,40 @@
+.figure {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 200px;
+}
+
+.recharts-responsive-container {
+  width: 200px !important;
+}
+
+.dots {
+  align-items: center;
+  margin-left: 1rem;
+}
+
+.dot {
+  height: 15px;
+  width: 15px;
+  border-radius: 50%;
+  display: inline-block;
+  &.fullbody {
+    background-color: #0088fe;
+  }
+  &.legs {
+    background-color: #ffbb28;
+  }
+  &.upperbody {
+    background-color: #00c49f;
+  }
+}
+
+.tooltip {
+  .category {
+    font-weight: 500;
+  }
+  .count {
+    font-size: small;
+  }
+}
