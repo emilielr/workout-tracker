@@ -4,7 +4,7 @@ type Workout = {
   id: string;
   workoutName: string;
   date: Date;
-  exercises: Exercise2[];
+  exercises: Exercise[];
 };
 
 type LineChartData = {
