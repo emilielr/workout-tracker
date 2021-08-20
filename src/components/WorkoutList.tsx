@@ -30,12 +30,8 @@ export const WorkoutList = () => {
   const getWorkoutCount = (
     query: firebase.firestore.Query<firebase.firestore.DocumentData>
   ) => {
-    let count = 0;
     query.get().then((querySnapshot) => {
-      querySnapshot.forEach(() => {
-        count++;
-      });
-      setWorkoutCount(count);
+      setWorkoutCount(querySnapshot.docs.length);
     });
   };
 

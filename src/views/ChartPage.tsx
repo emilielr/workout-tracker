@@ -9,7 +9,7 @@ import {
 import { useEffect } from "react";
 import { useState } from "react";
 import { emptySet } from "../components/DetailedWorkoutForm";
-import { LineChartComponent } from "../components/LineChart";
+import { LineChartComponent } from "../components/charts/LineChart";
 import { db } from "../firebase";
 import { usePrevious } from "../utils/comparison";
 import { simpleFormatDate } from "../utils/date";
@@ -19,8 +19,8 @@ export const ChartPage = () => {
   const [userInput, setUserInput] = useState("");
   const [data, setData] = useState<LineChartData[]>([]);
 
-  const [lowerBound, setLowerBound] = useState<number>(8);
-  const [upperBound, setUpperBound] = useState<number>(10);
+  const [lowerBound, setLowerBound] = useState(8);
+  const [upperBound, setUpperBound] = useState(10);
   const repRange = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
 
   const prevData = usePrevious(data);

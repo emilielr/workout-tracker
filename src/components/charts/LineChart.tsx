@@ -40,7 +40,12 @@ export const LineChartComponent = ({ data }: Props) => {
           <YAxis />
           <Tooltip content={<CustomTooltip />} />
           <Legend />
-          <Line dataKey="kg" stroke="#82ca9d" strokeWidth={2} />
+          <Line
+            dataKey="kg"
+            stroke="#82ca9d"
+            strokeWidth={2}
+            isAnimationActive={false}
+          />
         </LineChart>
       </ResponsiveContainer>
     </div>
