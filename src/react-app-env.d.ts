@@ -7,13 +7,6 @@ type Workout = {
   exercises: Exercise2[];
 };
 
-type Exercise = {
-  name: string;
-  sets: string;
-  reps: string;
-  kg: string;
-};
-
 type LineChartData = {
   date: string;
   kg: string;
@@ -26,7 +19,7 @@ type PieChartData = {
   category: categoryEnum;
 };
 
-type Exercise2 = {
+type Exercise = {
   name: string;
   set1: Sett;
   set2: Sett;
