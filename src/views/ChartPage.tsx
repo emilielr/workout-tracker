@@ -14,9 +14,11 @@ import { db } from "../firebase";
 import { usePrevious } from "../utils/comparison";
 import { simpleFormatDate } from "../utils/date";
 import "./ChartPage.scss";
+import { TableComponent } from "../components/Table";
 
 export const ChartPage = () => {
   const [userInput, setUserInput] = useState("");
+  const [tableInput, setTableInput] = useState("");
   const [data, setData] = useState<LineChartData[]>([]);
 
   const [lowerBound, setLowerBound] = useState(8);
@@ -118,7 +120,10 @@ export const ChartPage = () => {
           disabled={userInput === "" ? true : false}
           variant="outlined"
           size="small"
-          onClick={() => getExercise(userInput)}
+          onClick={() => {
+            getExercise(userInput);
+            setTableInput(userInput);
+          }}
         >
           Søk
         </Button>
@@ -167,6 +172,7 @@ export const ChartPage = () => {
       </div>
 
       <LineChartComponent data={data} />
+      <TableComponent exercise={tableInput} />
     </div>
   );
 };

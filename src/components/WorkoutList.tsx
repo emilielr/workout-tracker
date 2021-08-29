@@ -103,18 +103,19 @@ export const WorkoutList = () => {
       .limit(rowsPerPage)
       .get()
       .then((querySnapshot) => {
-        let temp: Workout[] = [];
         querySnapshot.forEach((doc) => {
-          temp.push({
-            id: doc.id,
-            workoutName: doc.data().workoutName,
-            date: doc.data().date.toDate(),
-            exercises: doc.data().exercises,
-          });
+          setWorkouts((workouts) => [
+            ...workouts,
+            {
+              id: doc.id,
+              workoutName: doc.data().workoutName,
+              date: doc.data().date.toDate(),
+              exercises: doc.data().exercises,
+            },
+          ]);
         });
         setPrevPage(querySnapshot.docs[0]);
         setNextPage(querySnapshot.docs[querySnapshot.docs.length - 1]);
-        setWorkouts(temp);
       });
   }, [rowsPerPage, getQuery]);
 
