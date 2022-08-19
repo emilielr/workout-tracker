@@ -6,6 +6,7 @@ import { ChartPage } from "./views/ChartPage";
 import { TopBar } from "./components/TopBar";
 import { WorkoutList } from "./components/WorkoutList";
 import { DetailedWorkoutForm } from "./components/DetailedWorkoutForm";
+import { SuggestionBank } from "./components/SuggestionBank";
 
 function App() {
   return (
@@ -26,6 +27,9 @@ function App() {
         </Route>
         <Route path="/workouts">
           <WorkoutList />
+        </Route>
+        <Route path="/suggestions">
+          <SuggestionBank />
         </Route>
       </div>
     </Router>
